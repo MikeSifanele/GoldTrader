@@ -36,11 +36,6 @@ class Chart {
     var bodyRightBorder = bodyLeftBorder + bodyWidth;
     var wickRightBorder = wickLeftBorder + wickWidth;
 
-    console.log('Body left: ' + bodyLeftBorder);
-    console.log('Wick left: ' + wickLeftBorder);
-    console.log('Wick right: ' + wickRightBorder);
-    console.log('Body right: ' + bodyRightBorder);
-
     var ctx = canvas.getContext('2d');
 
     ctx.fillStyle = (close >= open) ? this.bullColour : this.bearColour;
