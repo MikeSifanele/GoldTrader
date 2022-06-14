@@ -1,17 +1,47 @@
 class Chart {
-  constructor({ height = 0 } = {}) {
-    this.height = height;
+  constructor({ height = 0, width = 0,  chartLimit = 240} = {}) {
+    this.canvasHeight = height;
+    this.canvasWidth = width;
     this.bullColour = '#00e600';
     this.bearColour = '#ff0000';
+    this.chartLimit = chartLimit;
   }
 
-  addCandle(ctx, { wickWidth = 1, open = 0, high = 0, low = 0, close = 0, isPeak = false, isValley = false } = {}) {
+  addCandle(chart, {wickWidth = 2, open = 0, high = 0, low = 0, close = 0, isPeak = false, isValley = false } = {}) {
+    const numberOfCandles = chart.getElementsByTagName('canvas').length;
+
+    if(numberOfCandles >= this.chartLimit)
+    {
+      document.getElementById("candle_0").remove();
+    }
+    
+    open = this.#fromPercentage(open, this.canvasHeight);
+    high = this.#fromPercentage(high, this.canvasHeight);
+    low = this.#fromPercentage(low, this.canvasHeight);
+    close = this.#fromPercentage(close, this.canvasHeight);
+    
     var bodyWidth = wickWidth * 3;
 
-    var wickLeftBorder = bodyWidth + 4;
+    const elementId = 'candle_' + numberOfCandles.toString();
+
+    let canvas = document.createElement('canvas');
+    canvas.id = elementId;
+    canvas.height = this.canvasHeight;
+    canvas.width = bodyWidth + wickWidth;
+
+    chart.appendChild(canvas);
+
+    var bodyLeftBorder = 1;
+    var wickLeftBorder = bodyLeftBorder + wickWidth;
+    var bodyRightBorder = bodyLeftBorder + bodyWidth;
     var wickRightBorder = wickLeftBorder + wickWidth;
-    var bodyLeftBorder = wickLeftBorder - bodyWidth;
-    var bodyRightBorder = wickRightBorder + bodyWidth;
+
+    console.log('Body left: ' + bodyLeftBorder);
+    console.log('Wick left: ' + wickLeftBorder);
+    console.log('Wick right: ' + wickRightBorder);
+    console.log('Body right: ' + bodyRightBorder);
+
+    var ctx = canvas.getContext('2d');
 
     ctx.fillStyle = (close >= open) ? this.bullColour : this.bearColour;
     ctx.beginPath();
@@ -43,5 +73,8 @@ class Chart {
 
     ctx.closePath();
     ctx.fill();
+  }
+  #fromPercentage(value, maxValue){
+    return value / 100 * maxValue;
   }
 }

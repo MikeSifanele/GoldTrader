@@ -1,11 +1,6 @@
 body{
     margin: 0;
-    background: darkgray;
+    background: black;
     overflow: hidden;
     text-align: center;
-}
-
-#chart{
-    background: lightgray;
-    margin: auto;
 }
