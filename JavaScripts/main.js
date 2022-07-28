@@ -1,6 +1,5 @@
-const canvas = document.getElementById('chart');
-canvas.height = window.innerHeight;
-canvas.width = parseInt(window.innerWidth * .9);
+var chartContainer = document.getElementById('chartContainer');
 
-let chart = new Chart({height: canvas.height});
-chart.addCandle(canvas.getContext("2d"), {open: 50, high: 10, low: 130, close: 100});
+let chart = new Chart({height: window.innerHeight, width: parseInt(window.innerWidth * .95)});
+chart.addCandle(chartContainer, {open: 10, high: 1, low: 40, close: 35});
+
